@@ -128,9 +128,10 @@ const ScanTask: React.FC<ScanTaskProps> = ({ title, action, confirmLabel, hint }
       <button
         disabled={!complete}
         onClick={() => performAction(action)}
-        className="pixel-btn bg-primary text-primary-foreground game-title text-sm font-bold px-4 py-2 w-full disabled:opacity-40 disabled:cursor-not-allowed"
+        className="pixel-btn bg-primary text-primary-foreground game-title text-sm font-bold px-4 py-2 w-full disabled:opacity-40 disabled:cursor-not-allowed flex items-center justify-between gap-3"
       >
-        {confirmLabel}
+        <span>{confirmLabel}</span>
+        <span className="hud-text text-[10px] opacity-90">[Enter]</span>
       </button>
     </SceneHud>
   );
@@ -253,9 +254,10 @@ const PhoneCallTask: React.FC = () => {
         </div>
         <button
           onClick={submitNumber}
-          className="pixel-btn bg-green-600 border-green-400 text-white game-title text-sm font-bold px-4 py-2 mt-3 w-full"
+          className="pixel-btn bg-green-600 border-green-400 text-white game-title text-sm font-bold px-4 py-2 mt-3 w-full flex items-center justify-between gap-3"
         >
-          拨出
+          <span>拨出</span>
+          <span className="hud-text text-[10px] opacity-90">[Enter]</span>
         </button>
       </div>
     </div>

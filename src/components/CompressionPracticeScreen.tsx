@@ -4,6 +4,7 @@ import { motion, AnimatePresence } from 'motion/react';
 import { useGameStore } from '@/game/state';
 import type { CompressionRating } from '@/game/state';
 import { playCompressionSound } from '@/audio/sound';
+import { RHYTHM_ZONE_LABEL_POSITIONS, RHYTHM_ZONE_STYLES, rateCompressionRhythm } from '@/game/rhythm';
 
 const RATING_COLORS: Record<CompressionRating, string> = {
   perfect: 'text-green-400',
@@ -101,15 +102,7 @@ const CompressionPracticeScreen: React.FC = () => {
     if (e.code === 'Space') {
       e.preventDefault();
       pressPracticeCompression();
-      // 根据节奏位置预估评分来播放对应音效
-      const rhythmPos = (window as Window & { __RHYTHM_POS__?: { current: number } }).__RHYTHM_POS__?.current ?? 0.5;
-      const distFromCenter = Math.abs(rhythmPos - 0.5);
-      let rating: 'perfect' | 'good' | 'slow' | 'fast' = 'good';
-      if (distFromCenter <= 0.05) rating = 'perfect';
-      else if (distFromCenter <= 0.2) rating = 'good';
-      else if (rhythmPos < 0.5) rating = 'fast';
-      else rating = 'slow';
-      playCompressionSound(rating);
+      playCompressionSound(rateCompressionRhythm());
     }
   }, [pressPracticeCompression]);
 
@@ -179,27 +172,27 @@ const CompressionPracticeScreen: React.FC = () => {
             {/* GOOD 区域 */}
             <div
               className="absolute top-0 h-full bg-green-600/30 border-r border-green-500/50"
-              style={{ left: '30%', width: '15%' }}
+              style={RHYTHM_ZONE_STYLES.leftGood}
             />
             {/* PERFECT 区域 */}
             <div
               className="absolute top-0 h-full bg-green-500/20 border-l border-r border-green-500"
-              style={{ left: '45%', width: '10%' }}
+              style={RHYTHM_ZONE_STYLES.perfect}
             />
             {/* GOOD 区域 */}
             <div
               className="absolute top-0 h-full bg-green-600/30 border-l border-green-500/50"
-              style={{ left: '55%', width: '15%' }}
+              style={RHYTHM_ZONE_STYLES.rightGood}
             />
 
             {/* 标签 */}
-            <span className="absolute left-[37.5%] top-0 hud-text text-xs text-green-400 -translate-x-1/2 leading-7">
+            <span className="absolute top-0 hud-text text-xs text-green-400 -translate-x-1/2 leading-7" style={{ left: RHYTHM_ZONE_LABEL_POSITIONS.leftGood }}>
               GOOD
             </span>
-            <span className="absolute left-[50%] top-0 hud-text text-xs text-green-300 -translate-x-1/2 leading-7">
+            <span className="absolute top-0 hud-text text-xs text-green-300 -translate-x-1/2 leading-7" style={{ left: RHYTHM_ZONE_LABEL_POSITIONS.perfect }}>
               PERF
             </span>
-            <span className="absolute left-[62.5%] top-0 hud-text text-xs text-green-400 -translate-x-1/2 leading-7">
+            <span className="absolute top-0 hud-text text-xs text-green-400 -translate-x-1/2 leading-7" style={{ left: RHYTHM_ZONE_LABEL_POSITIONS.rightGood }}>
               GOOD
             </span>
 

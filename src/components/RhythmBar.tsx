@@ -4,6 +4,7 @@ import { motion, AnimatePresence } from 'motion/react';
 import { useGameStore } from '@/game/state';
 import type { CompressionRating } from '@/game/state';
 import { COMPRESSION_TIMING } from '@/game/constants';
+import { RHYTHM_ZONE_LABEL_POSITIONS, RHYTHM_ZONE_STYLES } from '@/game/rhythm';
 
 const RATING_COLORS: Record<CompressionRating, string> = {
   perfect: 'text-green-400',
@@ -85,27 +86,27 @@ const RhythmBar: React.FC = () => {
         {/* 左侧GOOD区域 */}
         <div
           className="absolute top-0 h-full bg-green-600/30 border-r border-green-500/50"
-          style={{ left: '30%', width: '15%' }}
+          style={RHYTHM_ZONE_STYLES.leftGood}
         />
         {/* 中间PERFECT区域 */}
         <div
           className="absolute top-0 h-full bg-green-500/20 border-l border-r border-green-500"
-          style={{ left: '45%', width: '10%' }}
+          style={RHYTHM_ZONE_STYLES.perfect}
         />
         {/* 右侧GOOD区域 */}
         <div
           className="absolute top-0 h-full bg-green-600/30 border-l border-green-500/50"
-          style={{ left: '55%', width: '15%' }}
+          style={RHYTHM_ZONE_STYLES.rightGood}
         />
 
         {/* 区间标签 */}
-        <span className="absolute left-[37.5%] top-0 hud-text text-xs text-green-400 -translate-x-1/2 leading-5">
+        <span className="absolute top-0 hud-text text-xs text-green-400 -translate-x-1/2 leading-5" style={{ left: RHYTHM_ZONE_LABEL_POSITIONS.leftGood }}>
           GOOD
         </span>
-        <span className="absolute left-[50%] top-0 hud-text text-xs text-green-300 -translate-x-1/2 leading-5">
+        <span className="absolute top-0 hud-text text-xs text-green-300 -translate-x-1/2 leading-5" style={{ left: RHYTHM_ZONE_LABEL_POSITIONS.perfect }}>
           PERF
         </span>
-        <span className="absolute left-[62.5%] top-0 hud-text text-xs text-green-400 -translate-x-1/2 leading-5">
+        <span className="absolute top-0 hud-text text-xs text-green-400 -translate-x-1/2 leading-5" style={{ left: RHYTHM_ZONE_LABEL_POSITIONS.rightGood }}>
           GOOD
         </span>
 

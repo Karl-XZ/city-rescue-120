@@ -3,7 +3,7 @@ import { motion } from 'motion/react';
 import { Canvas } from '@react-three/fiber';
 import { useTexture } from '@react-three/drei';
 import * as THREE from 'three';
-import { GAME_IMAGE_ASSETS, gameImageAssetUrls, preloadGameImages } from '@/game/assets';
+import { GAME_IMAGE_ASSETS, gameTextureAssetUrls, preloadGameImages } from '@/game/assets';
 import { useGameStore } from '@/game/state';
 
 const MIN_VISIBLE_MS = 600;
@@ -34,7 +34,7 @@ const LoadingScreen: React.FC = () => {
   const [texturesReady, setTexturesReady] = useState(false);
   const total = GAME_IMAGE_ASSETS.length;
   const progress = useMemo(() => Math.round((loaded / total) * 100), [loaded, total]);
-  const textureUrls = useMemo(() => gameImageAssetUrls(), []);
+  const textureUrls = useMemo(() => gameTextureAssetUrls(), []);
 
   useEffect(() => {
     let cancelled = false;

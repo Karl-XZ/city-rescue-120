@@ -2,6 +2,7 @@
 
 import { create } from 'zustand';
 import { GAME_DURATION, AED_ARRIVAL_TIME, AMBULANCE_ARRIVAL_TIME, MISTAKE_PENALTIES } from './constants';
+import { rateCompressionRhythm } from './rhythm';
 
 export type GamePhase = 'start' | 'briefing' | 'loading' | 'playing' | 'result' | 'credits' | 'practice' | 'practice_result';
 
@@ -451,24 +452,7 @@ export const useGameStore = create<GameStore>((set, get) => ({
 
     const now = Date.now();
     const { compressionStats } = state;
-    let rating: CompressionRating = 'good';
-
-    // 基于节奏条指示器位置评分（正中间=PERFECT，旁边=GOOD）
-    const rhythmPos = (window as Window & { __RHYTHM_POS__?: { current: number } }).__RHYTHM_POS__?.current ?? 0.5;
-    const distFromCenter = Math.abs(rhythmPos - 0.5);
-    if (distFromCenter <= 0.05) {
-      // 正中间 45%-55% → PERFECT
-      rating = 'perfect';
-    } else if (distFromCenter <= 0.2) {
-      // 旁边 30%-45% 或 55%-70% → GOOD
-      rating = 'good';
-    } else if (rhythmPos < 0.5) {
-      // 左端 0%-30% → 太快
-      rating = 'fast';
-    } else {
-      // 右端 70%-100% → 太慢
-      rating = 'slow';
-    }
+    const rating = rateCompressionRhythm();
 
     const isGoodOrBetter = rating === 'perfect' || rating === 'good';
     const newCombo = isGoodOrBetter ? compressionStats.currentCombo + 1 : 0;
@@ -622,19 +606,7 @@ export const useGameStore = create<GameStore>((set, get) => ({
     if (state.phase !== 'practice') return;
 
     const { practiceStats } = state;
-    let rating: CompressionRating = 'good';
-
-    const rhythmPos = (window as Window & { __RHYTHM_POS__?: { current: number } }).__RHYTHM_POS__?.current ?? 0.5;
-    const distFromCenter = Math.abs(rhythmPos - 0.5);
-    if (distFromCenter <= 0.05) {
-      rating = 'perfect';
-    } else if (distFromCenter <= 0.2) {
-      rating = 'good';
-    } else if (rhythmPos < 0.5) {
-      rating = 'fast';
-    } else {
-      rating = 'slow';
-    }
+    const rating = rateCompressionRhythm();
 
     const isGoodOrBetter = rating === 'perfect' || rating === 'good';
     const newCombo = isGoodOrBetter ? practiceStats.currentCombo + 1 : 0;
