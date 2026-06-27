@@ -4,6 +4,7 @@ import { Canvas, useFrame, useThree } from '@react-three/fiber';
 import { Text } from '@react-three/drei';
 import * as THREE from 'three';
 import { useGameStore } from '@/game/state';
+import { gameAssetUrl } from '@/game/assets';
 import { POSITIONS, INTERACTION_DISTANCE } from '@/game/constants';
 import PatientModel from './Patient';
 import AEDStation from './AEDStation';
@@ -16,6 +17,31 @@ const Ground: React.FC = () => (
     <planeGeometry args={[28, 28]} />
     <meshLambertMaterial color="#1a2035" />
   </mesh>
+);
+
+const SceneLoadingFallback: React.FC = () => (
+  <group>
+    <ambientLight intensity={0.8} color="#c8d8f0" />
+    <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, 0, 0]}>
+      <planeGeometry args={[28, 28]} />
+      <meshLambertMaterial color="#1a2035" />
+    </mesh>
+    <mesh position={[0, 1.2, -4]}>
+      <boxGeometry args={[2.4, 0.8, 0.1]} />
+      <meshBasicMaterial color="#0f1b33" />
+    </mesh>
+    <Suspense fallback={null}>
+      <Text
+        position={[0, 1.22, -3.94]}
+        fontSize={0.18}
+        color="#f8c537"
+        anchorX="center"
+        anchorY="middle"
+      >
+        正在载入急救现场
+      </Text>
+    </Suspense>
+  </group>
 );
 
 // 道路十字
@@ -510,7 +536,7 @@ const CommunityScene: React.FC = () => {
       <PlayerController joystickRef={joystickRef} />
 
       {/* 场景元素 */}
-      <Suspense fallback={null}>
+      <Suspense fallback={<SceneLoadingFallback />}>
         <Ground />
         <Roads />
         <Fence />
@@ -529,19 +555,19 @@ const CommunityScene: React.FC = () => {
         <NPCModel
           id="npc1"
           position={POSITIONS.npc1}
-          spriteUrl="/assets/characters/bystander_01_phone.png"
+          spriteUrl={gameAssetUrl('assets/characters/bystander_01_phone.png')}
           height={2.25}
         />
         <NPCModel
           id="npc2"
           position={POSITIONS.npc2}
-          spriteUrl="/assets/characters/bystander_02_aed_pointer.png"
+          spriteUrl={gameAssetUrl('assets/characters/bystander_02_aed_pointer.png')}
           height={2.25}
         />
         <NPCModel
           id="npc3"
           position={POSITIONS.npc3}
-          spriteUrl="/assets/characters/bystander_03_elder.png"
+          spriteUrl={gameAssetUrl('assets/characters/bystander_03_elder.png')}
           height={2.15}
         />
 
@@ -554,13 +580,13 @@ const CommunityScene: React.FC = () => {
             />
             <NPCModel
               position={[POSITIONS.patient[0] - 1.7, 0, POSITIONS.patient[2] - 0.7]}
-              spriteUrl="/assets/characters/medic_01_bag.png"
+              spriteUrl={gameAssetUrl('assets/characters/medic_01_bag.png')}
               height={2.4}
               marker={false}
             />
             <NPCModel
               position={[POSITIONS.patient[0] + 1.55, 0, POSITIONS.patient[2] - 0.55]}
-              spriteUrl="/assets/characters/medic_02_aed_assist.png"
+              spriteUrl={gameAssetUrl('assets/characters/medic_02_aed_assist.png')}
               height={2.25}
               marker={false}
             />

@@ -69,7 +69,7 @@ const TUTORIAL_STEPS = [
 ];
 
 const BriefingScreen: React.FC = () => {
-  const { startGame } = useGameStore();
+  const { setPhase } = useGameStore();
   const [currentStep, setCurrentStep] = useState(0);
 
   const step = TUTORIAL_STEPS[currentStep];
@@ -78,7 +78,7 @@ const BriefingScreen: React.FC = () => {
   const handleNext = () => {
     if (isLast) {
       playSuccessSound();
-      startGame();
+      setPhase('loading');
     } else {
       setCurrentStep(s => s + 1);
     }
@@ -194,7 +194,7 @@ const BriefingScreen: React.FC = () => {
         {/* 跳过按钮 */}
         {!isLast && (
           <button
-            onClick={() => { playSuccessSound(); startGame(); }}
+            onClick={() => { playSuccessSound(); setPhase('loading'); }}
             className="w-full mt-3 text-muted-foreground hud-text text-xs py-2 hover:text-foreground transition-colors"
           >
             跳过教学，直接开始

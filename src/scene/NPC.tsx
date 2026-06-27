@@ -4,6 +4,7 @@ import { useFrame } from '@react-three/fiber';
 import { Text } from '@react-three/drei';
 import * as THREE from 'three';
 import { useGameStore } from '@/game/state';
+import { gameAssetUrl } from '@/game/assets';
 import SpriteBillboard, { SpriteGroundShadow } from './SpriteBillboard';
 
 interface NPCModelProps {
@@ -19,7 +20,7 @@ const NPCModel: React.FC<NPCModelProps> = ({
   id,
   position,
   color = '#ffffff',
-  spriteUrl = '/assets/characters/bystander_01_phone.png',
+  spriteUrl = gameAssetUrl('assets/characters/bystander_01_phone.png'),
   height = 2.3,
   marker = true,
 }) => {

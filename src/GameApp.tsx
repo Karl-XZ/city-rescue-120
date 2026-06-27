@@ -4,6 +4,7 @@ import { AnimatePresence, motion } from 'motion/react';
 import { useGameStore } from '@/game/state';
 import StartScreen from '@/components/StartScreen';
 import BriefingScreen from '@/components/BriefingScreen';
+import LoadingScreen from '@/components/LoadingScreen';
 import GameScreen from '@/components/GameScreen';
 import ResultScreen from '@/components/ResultScreen';
 import CreditsScreen from '@/components/CreditsScreen';
@@ -39,6 +40,19 @@ const GameApp: React.FC = () => {
             className="w-full min-h-screen"
           >
             <BriefingScreen />
+          </motion.div>
+        )}
+
+        {phase === 'loading' && (
+          <motion.div
+            key="loading"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.15 }}
+            className="w-full min-h-screen"
+          >
+            <LoadingScreen />
           </motion.div>
         )}
 

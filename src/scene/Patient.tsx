@@ -1,6 +1,7 @@
 // 患者贴片立绘
 import React from 'react';
 import { useGameStore } from '@/game/state';
+import { gameAssetUrl } from '@/game/assets';
 import SpriteBillboard, { GroundSpritePlane, SpriteGroundShadow } from './SpriteBillboard';
 
 interface PatientModelProps {
@@ -23,8 +24,8 @@ const PatientModel: React.FC<PatientModelProps> = ({ position }) => {
     'shock_done',
   ].includes(currentStep);
   const groundSprite = isCareActive
-    ? (hasAedPads ? '/assets/characters/patient_05_aed_pads.png' : '/assets/characters/patient_03_cpr_open.png')
-    : '/assets/characters/patient_02_collapsed.png';
+    ? (hasAedPads ? gameAssetUrl('assets/characters/patient_05_aed_pads.png') : gameAssetUrl('assets/characters/patient_03_cpr_open.png'))
+    : gameAssetUrl('assets/characters/patient_02_collapsed.png');
   const groundSize: [number, number] = isCareActive ? [2.14, 3.56] : [1.85, 3.55];
 
   return (
@@ -33,7 +34,7 @@ const PatientModel: React.FC<PatientModelProps> = ({ position }) => {
         <>
           <SpriteGroundShadow radius={0.82} opacity={0.28} />
           <SpriteBillboard
-            url="/assets/characters/patient_04_recovery.png"
+            url={gameAssetUrl('assets/characters/patient_04_recovery.png')}
             position={[0, 1.04, 0]}
             scale={[1.85, 2.35, 1]}
             renderOrder={3}

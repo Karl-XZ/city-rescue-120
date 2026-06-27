@@ -3,7 +3,7 @@
 import { create } from 'zustand';
 import { GAME_DURATION, AED_ARRIVAL_TIME, AMBULANCE_ARRIVAL_TIME, MISTAKE_PENALTIES } from './constants';
 
-export type GamePhase = 'start' | 'briefing' | 'playing' | 'result' | 'credits' | 'practice' | 'practice_result';
+export type GamePhase = 'start' | 'briefing' | 'loading' | 'playing' | 'result' | 'credits' | 'practice' | 'practice_result';
 
 export type RescueStep =
   | 'incident_found'
