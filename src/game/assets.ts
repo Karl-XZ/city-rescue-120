@@ -5,17 +5,9 @@ const THREE_TEXTURE_ASSETS_INTERNAL = [
   'assets/characters/medic_01_bag.png',
   'assets/characters/medic_02_aed_assist.png',
   'assets/characters/patient_02_collapsed.png',
-  'assets/characters/patient_03_cpr.png',
   'assets/characters/patient_03_cpr_open.png',
   'assets/characters/patient_04_recovery.png',
   'assets/characters/patient_05_aed_pads.png',
-  'assets/characters/prop_01_aed_cabinet.png',
-  'assets/characters/prop_02_aed_open.png',
-  'assets/characters/prop_03_phone.png',
-  'assets/characters/prop_04_first_aid_kit.png',
-  'assets/characters/prop_05_ambulance.png',
-  'assets/characters/prop_06_marker.png',
-  'assets/characters/prop_07_blanket.png',
 ] as const;
 
 export const THREE_TEXTURE_ASSETS = THREE_TEXTURE_ASSETS_INTERNAL;
